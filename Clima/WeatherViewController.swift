@@ -1,10 +1,5 @@
-//
 //  ViewController.swift
 //  WeatherApp
-//
-//  Created by Angela Yu on 23/08/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
-//
 
 import UIKit
 import CoreLocation
@@ -87,7 +82,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
             f = f * 9/5 - 459.67
         
             let city = data["name"].stringValue
-            let cond = data["weather"]["id"].intValue
+            let cond = data["weather"][0]["id"].intValue
             let icon = weatherDataModel.updateWeatherIcon(condition: cond)
             
             
@@ -115,8 +110,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     func updateWeatherUI(){
         
         cityLabel.text = weatherDataModel.city
-        temperatureLabel.text = String(weatherDataModel.temperature)
+        temperatureLabel.text = "\(weatherDataModel.temperature)°"
         weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName)
+        print(weatherDataModel.weatherIconName)
     }
     
     
@@ -130,6 +126,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     //Write the didUpdateLocations method here:
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let bestLocation = locations[locations.count - 1]
+        print("bestLocation \(bestLocation)")
+        
         if bestLocation.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
@@ -159,8 +157,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     
     //Write the userEnteredANewCityName Delegate method here:
     func userEnteredANewCityName (city: String){
-        print(city)
+        let params: [String : String] = ["q": city, "appid": APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
     }
+
 
     
     //Write the PrepareForSegue Method here

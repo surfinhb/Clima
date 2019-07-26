@@ -1,18 +1,13 @@
-//
 //  ChangeCityViewController.swift
 //  WeatherApp
-//
-//  Created by Angela Yu on 23/08/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
-//
+
 
 import UIKit
 
 
-//Write the protocol declaration here:
-
-// if u wanna be a delegate you have to implement below method
+//protocol declaration
 protocol ChangeCityDelegate {
+    // if u wanna be a delegate you have to implement below method
     func userEnteredANewCityName (city: String)
 }
 
@@ -43,8 +38,6 @@ class ChangeCityViewController: UIViewController {
         
     }
     
-    
-
     //This is the IBAction that gets called when the user taps the back button. It dismisses the ChangeCityViewController.
     @IBAction func backButtonPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
